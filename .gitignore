@@ -1,0 +1,20 @@
+# Python
+__pycache__/
+*.py[cod]
+*.egg-info/
+.pytest_cache/
+.mypy_cache/
+
+# 虚拟环境
+.venv/
+venv/
+env/
+
+# 构建产物
+dist/
+build/
+*.spec
+
+# IDE
+.idea/
+.vscode/
