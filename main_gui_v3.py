@@ -9,7 +9,7 @@ V3 相对 V2 的改进:
   3. 状态复位令牌 — 修复 v2 中"2 秒复位"回调在下次输入进行中误改状态的竞态
   4. 结果细分 — 完成 / 空剪贴板 / 重复触发 / 中止 / 失败 分别显示
   5. 实时日志面板 — 显示输入进度与运行日志
-  6. 可选开始倒计时(3 秒, 可 F9 取消), 防止误触 F8 把内容打进 GUI 自己
+  6. F8 瞬发输入 — 按下立即开始, 无延迟
   7. 可选: 输入结束后恢复剪贴板
   8. 关闭窗口时 abort_typing() + unhook_all() 清理热键
 """
@@ -31,8 +31,6 @@ from core_logic_v3 import (
     start_typing,
     unhook_all,
 )
-
-COUNTDOWN_SECONDS = 3  # 开始前倒计时秒数(勾选后生效)
 
 # 输入结果 → 状态栏文案/颜色
 _RESULT_LABELS: dict[TypingResult, tuple[str, str]] = {
@@ -57,7 +55,6 @@ class App(ctk.CTk):
         self._generation: int = 0  # 状态复位令牌: 递增即作废旧复位回调
 
         # 选项镜像(主线程更新, 钩子线程安全读取)
-        self._countdown_enabled = True
         self._restore_enabled = True
 
         self._build_ui()
@@ -95,14 +92,7 @@ class App(ctk.CTk):
         # 选项行
         options_row = ctk.CTkFrame(self, fg_color="transparent")
         options_row.pack(pady=4)
-        self.countdown_var = tk.BooleanVar(value=True)
         self.restore_var = tk.BooleanVar(value=True)
-        ctk.CTkCheckBox(
-            options_row,
-            text=f"开始前倒计时 {COUNTDOWN_SECONDS} 秒",
-            variable=self.countdown_var,
-            command=self._sync_options,
-        ).pack(side="left", padx=8)
         ctk.CTkCheckBox(
             options_row,
             text="结束后恢复剪贴板",
@@ -131,17 +121,15 @@ class App(ctk.CTk):
     # ── 选项同步(主线程) ────────────────────────────────────
 
     def _sync_options(self) -> None:
-        self._countdown_enabled = bool(self.countdown_var.get())
         self._restore_enabled = bool(self.restore_var.get())
 
     # ── 热键回调(在 keyboard 钩子线程中执行, 必须轻量) ───────
 
     def _on_hotkey_f8(self) -> None:
-        """F8: 只投递消息 + 启动工作线程, 立即返回。"""
+        """F8: 只投递消息 + 启动工作线程, 立即返回(瞬发输入, 无延迟)。"""
         self._msg_queue.put(("start", None))
         start_typing(
             speed=self.current_speed,
-            delay=COUNTDOWN_SECONDS if self._countdown_enabled else 0.0,
             restore_clipboard=self._restore_enabled,
             on_log=self._enqueue_log,
             on_done=self._enqueue_done,
