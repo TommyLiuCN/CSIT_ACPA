@@ -1,5 +1,22 @@
 # Changelog
 
+## v4.0.1-beta — 2026-08-15
+
+新增现代风格 GUI `main_gui_v4beta.py`，引擎不变（仍用 `core_logic_v4`）。
+
+### 新增
+
+- **深色主题界面** — 大号状态显示（READY / TYPING / DONE / ABORTED / ERROR 分色）、速度滑块（0.01~0.3s，29 档）、热键提示卡片、Consolas 日志面板。
+- **线程安全热键** — 键盘钩子回调经 `after(0, ...)` 转主线程，日志/完成回调同样经 `after` 转发。
+- **状态复位无竞态** — 状态复位统一由 `on_done(result)` 驱动，F9 中止后由 `ABORTED` 结果统一复位，不再单独改状态。
+- **关闭清理** — `_on_close` 中 `abort_typing()` + `unhook_all()`。
+
+### 文件清单
+
+| 文件 | 状态 | 说明 |
+|------|------|------|
+| `main_gui_v4beta.py` | 🆕 新建 | V4 Beta GUI（现代深色主题，基于 `core_logic_v4`） |
+
 ## v4.0.0 — 2026-08-15
 
 CSIT_ACPA V4 版本: 新增 `core_logic_v4.py` + `main_gui_v4.py`，保留 v1/v2/v3 文件不变。
