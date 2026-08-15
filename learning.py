@@ -46,20 +46,20 @@
 #                 money += debt
 #                 break
 # print("你破产了, 游戏结束!")
-import random
+# import random
 
-counters = [0] * 6
-total_rolls = 6000  # 把总次数提取成一个变量，方便后面计算
+# counters = [0] * 6
+# total_rolls = 6000  # 把总次数提取成一个变量，方便后面计算
 
-# 模拟掷色子
-for _ in range(total_rolls):
-    face = random.randrange(1, 7)
-    counters[face - 1] += 1
+# # 模拟掷色子
+# for _ in range(total_rolls):
+#     face = random.randrange(1, 7)
+#     counters[face - 1] += 1
 
-# 输出次数和概率
-print(f"总投掷次数：{total_rolls}")
-for face in range(1, 7):
-    count = counters[face - 1]
-    # 用单斜杠 / 进行除法，然后用 f-string 的 .2f 保留两位小数
-    probability = (count / total_rolls) * 100
-    print(f"{face}点出现了 {count} 次，概率约为 {probability:.2f}%")
+# # 输出次数和概率
+# print(f"总投掷次数：{total_rolls}")
+# for face in range(1, 7):
+#     count = counters[face - 1]
+#     # 用单斜杠 / 进行除法，然后用 f-string 的 .2f 保留两位小数
+#     probability = (count / total_rolls) * 100
+#     print(f"{face}点出现了 {count} 次，概率约为 {probability:.2f}%")

@@ -18,3 +18,4 @@ build/
 # IDE
 .idea/
 .vscode/
+learning.py
