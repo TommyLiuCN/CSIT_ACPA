@@ -10,7 +10,6 @@ main_gui_v4beta.py — CSIT_ACPA V4 Beta 自动输入 GUI
 from __future__ import annotations
 
 import customtkinter as ctk
-
 from core_logic_v4 import (
     DEFAULT_SPEED,
     TypingResult,
@@ -22,13 +21,13 @@ from core_logic_v4 import (
 )
 
 
-class ModernAutoTyperGUI:
+class ModernCSITACPAGUI:
     def __init__(self) -> None:
         ctk.set_appearance_mode("dark")
         ctk.set_default_color_theme("blue")
 
         self.window = ctk.CTk()
-        self.window.title("AutoTyper Pro v4beta")
+        self.window.title("CSIT_ACPA V4 Beta - by 楼sing")
         self.window.geometry("520x420")
         self.window.resizable(False, False)
 
@@ -63,17 +62,17 @@ class ModernAutoTyperGUI:
         speed_frame = ctk.CTkFrame(self.window, fg_color="#2B2B2B", corner_radius=12)
         speed_frame.pack(pady=20, padx=40, fill="x")
 
-        ctk.CTkLabel(
-            speed_frame, text="Typing Speed", font=ctk.CTkFont(size=14)
-        ).pack(anchor="w", padx=15, pady=(12, 0))
+        ctk.CTkLabel(speed_frame, text="Typing Speed", font=ctk.CTkFont(size=14)).pack(
+            anchor="w", padx=15, pady=(12, 0)
+        )
 
         slider_row = ctk.CTkFrame(speed_frame, fg_color="transparent")
         slider_row.pack(fill="x", padx=15, pady=(8, 12))
 
         self.speed_slider = ctk.CTkSlider(
             slider_row,
-            from_=0.01,
-            to=0.3,
+            from_=0.01,  # type: ignore
+            to=0.3,  # type: ignore
             number_of_steps=29,
             command=self._update_speed_label,
         )
@@ -100,7 +99,10 @@ class ModernAutoTyperGUI:
                 pady=(12 if key == "F8" else 4, 12 if key == "F9" else 4),
             )
             ctk.CTkLabel(
-                row, text=key, font=ctk.CTkFont(size=16, weight="bold"), text_color=color
+                row,
+                text=key,
+                font=ctk.CTkFont(size=16, weight="bold"),
+                text_color=color,
             ).pack(side="left")
             ctk.CTkLabel(row, text=label, font=ctk.CTkFont(size=13)).pack(
                 side="left", padx=(12, 0)
@@ -128,8 +130,8 @@ class ModernAutoTyperGUI:
 
     def _bind_hotkeys_safe(self) -> None:
         # keyboard 钩子回调 → after(0, ...) → 主线程执行
-        bind_hotkey(lambda: self.window.after(0, self._on_start))
-        bind_abort_hotkey(lambda: self.window.after(0, self._on_stop))
+        bind_hotkey(lambda: self.window.after(0, self._on_start))  # type: ignore
+        bind_abort_hotkey(lambda: self.window.after(0, self._on_stop))  # type: ignore
 
     # ── F8 触发 ──────────────────────────────────────────────
 
@@ -203,5 +205,5 @@ class ModernAutoTyperGUI:
 
 
 if __name__ == "__main__":
-    app = ModernAutoTyperGUI()
+    app = ModernCSITACPAGUI()
     app.run()
