@@ -11,16 +11,17 @@
 - **可调速度** — 每字符间隔 0.01~0.3s，GUI 滑块调节
 - **实时日志面板** — 显示输入进度与运行日志（窗口可自由缩放，日志区自动扩展）
 - **总在最上层开关** — 一键置顶/取消置顶
+- **浅色/深色主题切换** — "Dark Mode"一键切换，面板背景随主题适配，Windows 不同主题下风格一致
 - **结果细分** — 完成 / 空剪贴板 / 重复触发 / 中止 / 失败 分别显示不同状态
 
 ## 快速开始
 
 ```bash
 pip install -r requirements.txt
-python main_gui_v5beta.py  # V5 Beta: 现代深色主题 + 可缩放 + 置顶开关 + 图标（推荐）
+python main_gui_v6.py  # V6: 浅色/深色主题切换 + 可缩放 + 置顶开关 + 图标（推荐）
 ```
 
-> 旧版本（V1~V5）源码已归档至 `oldversion/` 目录，当前仅维护 V5 Beta。
+> 旧版本（V1~V5）源码已归档至 `oldversion/` 目录，当前维护 V6。
 
 ### 使用步骤
 
@@ -33,7 +34,8 @@ python main_gui_v5beta.py  # V5 Beta: 现代深色主题 + 可缩放 + 置顶开
 
 | 版本 | 文件 | 输入方式 | 说明 |
 |------|------|----------|------|
-| **V5 Beta**（推荐） | `core_logic_v4.py` / `main_gui_v5beta.py` | `SendInput` + `KEYEVENTF_UNICODE` 逐字符注入 | V4 Beta 深色风格 + 可缩放窗口 + 置顶开关 + 应用图标 |
+| **V6**（推荐） | `core_logic_v4.py` / `main_gui_v6.py` | `SendInput` + `KEYEVENTF_UNICODE` 逐字符注入 | V5 Beta 基础上新增浅色/深色主题一键切换，面板背景随主题适配 |
+| **V5 Beta** | `core_logic_v4.py` / `main_gui_v5beta.py` | `SendInput` + `KEYEVENTF_UNICODE` 逐字符注入 | V4 Beta 深色风格 + 可缩放窗口 + 置顶开关 + 应用图标 |
 | **V5** | `core_logic_v4.py` / `main_gui_v5.py` | `SendInput` + `KEYEVENTF_UNICODE` 逐字符注入 | 大窗口 + 自由缩放 + 置顶开关 + 应用图标 |
 | **V4** | `core_logic_v4.py` | `SendInput` + `KEYEVENTF_UNICODE` 逐字符注入 | 绕过 IME 与禁止粘贴，中英文直接进输入框，不碰剪贴板 |
 | **V4 beta GUI** | `main_gui_v4beta.py` | —（复用 V4 引擎） | 现代深色主题界面：大号状态显示、速度滑块、热键提示、日志面板 |
@@ -69,8 +71,9 @@ V4 用 Windows 的 `SendInput` + `KEYEVENTF_UNICODE` 标志直接注入 Unicode 
 
 ```
 core_logic_v4.py        # V4 引擎：SendInput Unicode 逐字符注入
-main_gui_v5beta.py      # V5 Beta GUI：现代深色主题 + 可缩放 + 置顶开关 + 图标（推荐入口）
-build_exe.py            # 一键打包脚本（输出到 dist\，自动清理打包垃圾）
+main_gui_v6.py          # V6 GUI：浅色/深色主题切换 + 可缩放 + 置顶开关 + 图标（推荐入口）
+main_gui_v5beta.py      # V5 Beta GUI：现代深色主题 + 可缩放 + 置顶开关 + 图标
+build_exe.py            # 一键打包脚本（输出到 dist\，自动清理打包垃圾，已 gitignore）
 app_icon.ico            # 应用图标
 oldversion/             # 已归档的旧版本源码（V1~V5）
 learning.py             # Python 练习代码（与项目无关）
