@@ -1,5 +1,70 @@
 # Changelog
 
+## v5.0.3 — 2026-08-20
+
+### 变更
+
+- **仓库瘦身** — 旧版本源码（V1~V5）全部归档至 `oldversion/` 目录，仅保留 V5 Beta 入口；`dist/` 不再提交到 Git（已从追踪中移除）。
+- **一键打包脚本** — 新增 `build_exe.py`：调用 PyInstaller 打包到 `dist/`，打包完成后自动清理 `build/`、`*.spec`、`__pycache__/` 等垃圾文件。
+- **文档更新** — README 同步项目结构与打包方式。
+
+### 文件清单
+
+| 文件 | 状态 | 说明 |
+|------|------|------|
+| `build_exe.py` | 🆕 新建 | 一键打包 + 自动清理垃圾 |
+| `oldversion/` | 🆕 新建 | 归档 V1~V5 旧版本源码 |
+
+## v5.0.2 — 2026-08-20
+
+### 变更
+
+- **图标重设计** — 弃用拟物风（渐变 + 文字 + 复杂按键），改为简约现代扁平风：深色圆角底 + 悬浮式圆角按键（3×6，大留白）+ 绿色 F8 高亮键。`make_icon.py` 与 `app_icon.ico` 同步更新。
+
+## v5.0.1-beta — 2026-08-20
+
+新增现代风格 GUI `main_gui_v5beta.py`，沿用 V4 Beta 的深色设计风格，并引入 V5 的界面改进，引擎不变（仍用 `core_logic_v4`）。
+
+### 新增/改进
+
+- **大窗口 + 自由缩放** — 默认 720x600（`minsize 560x480`），`resizable(True, True)`，日志面板随窗口自动伸缩，日志字体加大到 13。
+- **总在最上层开关** — 选项栏新增"总在最上层"开关（默认开启，可随时关闭）。
+- **应用图标** — 加载 `app_icon.ico`，窗口标题栏不再使用默认图标。
+- **清空日志按钮** — 选项栏右侧新增，便于长日志清理。
+
+### 清理
+
+- 删除 `build_exe_v5.bat` 打包脚本（如需打包可手动执行 `python -m PyInstaller --onefile --windowed --icon app_icon.ico --add-data "app_icon.ico;." main_gui_v5beta.py`）。
+- 清理 `build/`、`__pycache__/`、`*.spec` 等打包缓存垃圾。
+
+### 文件清单
+
+| 文件 | 状态 | 说明 |
+|------|------|------|
+| `main_gui_v5beta.py` | 🆕 新建 | V5 Beta GUI（V4 Beta 风格 + 可缩放 + 置顶开关 + 图标） |
+| `build_exe_v5.bat` | 🗑️ 删除 | 打包脚本（按需求清理） |
+
+## v5.0.0 — 2026-08-20
+
+CSIT_ACPA V5 版本: 新增 `main_gui_v5.py` + 图标与打包脚本，引擎不变（仍用 `core_logic_v4`）。
+
+### 新增/改进
+
+- **输出信息显示窗口不再太小** — 默认窗口 680x560（V4 仅 420x540 且日志区固定 170px 高），日志字体加大到 12，日志面板随窗口自由伸缩。
+- **应用图标美化** — 新增 `make_icon.py` 生成 `app_icon.ico`（深蓝渐变 + 键盘 + F8 高亮）；运行窗口加载该图标，`build_exe_v5.bat` 用 `--icon` 把图标嵌入 exe，打包后不再显示 Python 默认图标。
+- **自由调整窗口大小** — `resizable(True, True)` + `minsize(480, 420)`，控件 grid 权重布局随窗口自适应。
+- **总在最上层开关** — 新增"总在最上层"开关（默认开启，同 V4 行为），可随时关闭。
+
+### 文件清单
+
+| 文件 | 状态 | 说明 |
+|------|------|------|
+| `main_gui_v5.py` | 🆕 新建 | V5 GUI（大窗口 + 自适应 + 置顶开关 + 窗口图标） |
+| `make_icon.py` | 🆕 新建 | 生成 `app_icon.ico` 的绘图脚本 |
+| `app_icon.ico` | 🆕 新建 | 应用图标（GUI 窗口 + exe 资源） |
+| `build_exe_v5.bat` | 🆕 新建 | PyInstaller 一键打包脚本（`--icon` 嵌入图标） |
+| `core_logic_v4.py` / `main_gui_v4.py` | 🟢 原样保留 | V4 引擎与 GUI 不变 |
+
 ## v4.0.1-beta — 2026-08-15
 
 新增现代风格 GUI `main_gui_v4beta.py`，引擎不变（仍用 `core_logic_v4`）。

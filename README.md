@@ -9,16 +9,18 @@
 - **中英文混输** — 逐字符注入 Unicode，中文不再依赖剪贴板粘贴
 - **不受输入法影响** — V4 引擎绕过键盘布局与 IME，微软拼音/搜狗下也能正常输入
 - **可调速度** — 每字符间隔 0.01~0.3s，GUI 滑块调节
-- **实时日志面板** — 显示输入进度与运行日志
+- **实时日志面板** — 显示输入进度与运行日志（窗口可自由缩放，日志区自动扩展）
+- **总在最上层开关** — 一键置顶/取消置顶
 - **结果细分** — 完成 / 空剪贴板 / 重复触发 / 中止 / 失败 分别显示不同状态
 
 ## 快速开始
 
 ```bash
 pip install -r requirements.txt
-python main_gui_v4beta.py   # 现代深色主题界面（推荐）
-# 或 python main_gui_v4.py  # 精简界面
+python main_gui_v5beta.py  # V5 Beta: 现代深色主题 + 可缩放 + 置顶开关 + 图标（推荐）
 ```
+
+> 旧版本（V1~V5）源码已归档至 `oldversion/` 目录，当前仅维护 V5 Beta。
 
 ### 使用步骤
 
@@ -31,7 +33,9 @@ python main_gui_v4beta.py   # 现代深色主题界面（推荐）
 
 | 版本 | 文件 | 输入方式 | 说明 |
 |------|------|----------|------|
-| **V4**（推荐） | `core_logic_v4.py` | `SendInput` + `KEYEVENTF_UNICODE` 逐字符注入 | 绕过 IME 与禁止粘贴，中英文直接进输入框，不碰剪贴板 |
+| **V5 Beta**（推荐） | `core_logic_v4.py` / `main_gui_v5beta.py` | `SendInput` + `KEYEVENTF_UNICODE` 逐字符注入 | V4 Beta 深色风格 + 可缩放窗口 + 置顶开关 + 应用图标 |
+| **V5** | `core_logic_v4.py` / `main_gui_v5.py` | `SendInput` + `KEYEVENTF_UNICODE` 逐字符注入 | 大窗口 + 自由缩放 + 置顶开关 + 应用图标 |
+| **V4** | `core_logic_v4.py` | `SendInput` + `KEYEVENTF_UNICODE` 逐字符注入 | 绕过 IME 与禁止粘贴，中英文直接进输入框，不碰剪贴板 |
 | **V4 beta GUI** | `main_gui_v4beta.py` | —（复用 V4 引擎） | 现代深色主题界面：大号状态显示、速度滑块、热键提示、日志面板 |
 | **V4 GUI** | `main_gui_v4.py` | —（复用 V4 引擎） | 精简界面，其余功能与 V3 GUI 一致 |
 | **V3** | `core_logic_v3.py` / `main_gui_v3.py` | ASCII 用 `pynput.type()` + 中文用剪贴板粘贴 | 工作线程修复 F9 中止失效；但中文输入法下 ASCII 会被 IME 吞掉，且网页可拦截粘贴 |
@@ -65,14 +69,16 @@ V4 用 Windows 的 `SendInput` + `KEYEVENTF_UNICODE` 标志直接注入 Unicode 
 
 ```
 core_logic_v4.py        # V4 引擎：SendInput Unicode 逐字符注入
-main_gui_v4beta.py      # V4 beta GUI：现代深色主题（推荐入口）
-main_gui_v4.py          # V4 GUI：精简界面
-core_logic_v3.py        # V3 引擎：工作线程 + 剪贴板粘贴兜底
-main_gui_v3.py
-core_logic_v2.py        # V2 引擎：批量分段粘贴 + 并发锁
-main_gui_v2.py
-core_logic.py           # V1 原始引擎
-main_gui.py
+main_gui_v5beta.py      # V5 Beta GUI：现代深色主题 + 可缩放 + 置顶开关 + 图标（推荐入口）
+build_exe.py            # 一键打包脚本（输出到 dist\，自动清理打包垃圾）
+app_icon.ico            # 应用图标
+oldversion/             # 已归档的旧版本源码（V1~V5）
 learning.py             # Python 练习代码（与项目无关）
 CHANGELOG.md            # 版本记录
+```
+
+## 打包为 exe
+
+```bash
+python build_exe.py    # 一键打包到 dist\，自动清理 build/、*.spec、__pycache__ 等垃圾
 ```
