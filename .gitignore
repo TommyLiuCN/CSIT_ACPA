@@ -14,6 +14,7 @@ env/
 dist/
 build/
 *.spec
+build_exe.py
 
 # IDE
 .idea/
